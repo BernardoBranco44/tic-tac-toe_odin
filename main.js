@@ -60,15 +60,6 @@ function GameController() {
     const resetBtn = document.querySelector("#reset-game")
     const grid = document.querySelector(".grid")
 
-    const startGame = () => {
-        while (!isFinished) {
-            playRound()
-        }
-        console.log(`${activePlayer.name} won, congrats`)
-        gameboard = Gameboard()
-        isFinished = false
-    }
-
     const addSymbol = (e) => {
             if (e.target.innerHTML === "") {
                 e.target.innerHTML = activePlayer.token
@@ -117,25 +108,6 @@ function GameController() {
         location.reload()
     })
 
-    const playRound = () => {
-        activePlayer === play1 ? activePlayer = play2 : activePlayer = play1
-        gameboard.printBoard()
-        let row = prompt("Choose row")
-        let column = prompt("Choose column")
-        let playerChoice = gameboard.changeBoard(row, column, activePlayer.token)
-        while (playerChoice === "error") {
-            console.log("Spot already occupied")
-            let row = prompt("Choose row")
-            let column = prompt("Choose column")
-            playerChoice = gameboard.changeBoard(row, column, activePlayer.token)
-        }
-        if(gameboard.detectWin() && round > 0) {
-            isFinished = true
-        }
-        console.clear()
-        round++
-    }
-    return { playRound, startGame, addSymbol }
 }
 
 const controller = GameController()
